@@ -42,22 +42,22 @@ class QSBK:
         if not pageCode:
             print "页面加载失败...."
             return None
-        pattern = re.compile('<div.*?author">.*?<a.*?<img.*?>(.*?)</a>.*?<div.*?' +
-                             'content">(.*?)<!--(.*?)-->.*?</div>(.*?)<div class="stats.*?class="number">(.*?)</i>',
-                             re.S)
+        pattern = re.compile('h2>(.*?)</h2.*?content">(.*?)</.*?number">(.*?)</',re.S)
+
+
         items = re.findall(pattern, pageCode)
         # 用来存储每页的段子们
         pageStories = []
         # 遍历正则表达式匹配的信息
         for item in items:
-            # 是否含有图片
-            haveImg = re.search("img", item[3])
-            # 如果不含有图片，把它加入list中
-            if not haveImg:
-                replaceBR = re.compile('<br/>')
-                text = re.sub(replaceBR, "\n", item[1])
-                # item[0]是一个段子的发布者，item[1]是内容，item[2]是发布时间,item[4]是点赞数
-                pageStories.append([item[0].strip(), text.strip(), item[2].strip(), item[4].strip()])
+
+
+
+
+
+
+            # item[0]是一个段子的发布者，item[1]是内容，item[2]是发布时间,item[4]是点赞数
+            pageStories.append([item[0].strip(), item[1].strip(), item[2].strip()])
         return pageStories
 
     # 加载并提取页面的内容，加入到列表中
@@ -106,7 +106,6 @@ class QSBK:
                 del self.stories[0]
                 # 输出该页的段子
                 self.getOneStory(pageStories, nowPage)
-
 
 spider = QSBK()
 spider.start()
